@@ -1,7 +1,7 @@
 var loadModules = [
 'src/deferred_example', 
-'src/mixins_1',
-'src/mixins_2'
+//'src/mixins_1',
+//'src/mixins_2'
 ];
 
 dojoConfig = {
