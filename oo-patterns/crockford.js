@@ -1,6 +1,6 @@
 require([
-    "src/ParasiticSuperClass",
-   	"src/ParasiticSubClass"
+    "./ParasiticSuperClass",
+   	"./ParasiticSubClass"
 
 ], function (ParasiticSuperClass, ParasiticSubClass) {
 

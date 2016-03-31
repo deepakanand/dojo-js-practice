@@ -21,7 +21,6 @@ require([
 		}, 2000);
 
 		return deferred.promise;
-
 	}
 
 	// Consumer

@@ -1,5 +1,5 @@
 define([
-    "src/ParasiticSuperClass"
+    "./ParasiticSuperClass"
 ], function (ParasiticSuperClass) {
 
     return function () {
