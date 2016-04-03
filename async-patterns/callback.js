@@ -1,6 +1,5 @@
 (function() {
-	// Example 1
-	//
+	
 	// Producer
 	// Mimic an async I/O call using setTimeout
 	//
@@ -18,6 +17,8 @@
 	}
 
 	// Consumer
+	//
+	// Example 1	
 	// Invoke the async function
 	asyncFunction('http://foo.com/resource1', function(data) {
 		console.group('example 1');

@@ -1,7 +1,7 @@
 var dojoConfig = {
     async: true,
     cacheBust: false,
-    packages: [
-        { name: "src", location: "../../src" }
-    ]
+    // packages: [
+    //     { name: "src", location: "../../src" }
+    // ]
 };
