@@ -16,7 +16,10 @@ require([
 		var deferred = new Deferred();
 
 		setTimeout(function() {
-			var data = url.substr(url.lastIndexOf('/')+1);;
+			var data = url.substr(url.lastIndexOf('/')+1);
+			if(data.indexOf('resource') === -1){
+				deferred.reject('bad request: '+data);
+			}
 			deferred.resolve(data);
 		}, 2000);
 
@@ -25,8 +28,9 @@ require([
 
 	// Consumer
 	//
-	// Example 1
-	// Invoke the async function
+	// Example 1: Simple
+	// Specify a function to then() to be executed when th async
+	// function is successful
 	var asyncFunctionPromise = asyncFunction('http://foo.com/resource1');
 
 	// Write business logic to execute after the async function completes
@@ -35,17 +39,16 @@ require([
 	});
 
 
-	// Example 2
-	// avoid unweildy callback nesting by chaining promises
-
+	// Example 2: Multiple async calls
+	// Avoid unweildy callback nesting by chaining promises
 	asyncFunction('http://foo.com/resource1').then(function(data) {
 		if (data === 'resource1') {
-			console.log('example 2: ' + data)
+			console.log('example 2: ' + data);
 			return asyncFunction('http://foo.com/resource2');
 		}
 	}).then(function(data) {
 		if (data === 'resource2') {
-			console.log('example 2: ' + data)
+			console.log('example 2: ' + data);
 			return asyncFunction('http://foo.com/resource3');
 		}
 	}).then(function(data) {
@@ -53,6 +56,23 @@ require([
 			console.log('example 2: ' + data)
 			console.log('done');
 		}
+	});
+
+	// Example 3: Handling errors
+	// A second function specified to then() acts as the error callback
+	// If a seconda second function is consider an errback can be specified to then()
+	asyncFunction('http://foo.com/bar').then(function(data){
+		console.log('success');
+	}, function(err){
+		console.log('Example 3: fail: '+err);
+	});
+
+	// Example 4: Handling errors:
+	// An errback can be specified to otherwise()
+	asyncFunction('http://foo.com/baz').then(function(data){
+		console.log('success');
+	}).otherwise(function(err){
+		console.log('Example 4: fail: '+err);
 	});
 
 
