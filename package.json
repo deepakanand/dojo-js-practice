@@ -2,15 +2,17 @@
 	"name": "dojo-sandbox",
 	"version": "1.0.0",
 	"description": "Dojo Sandbox - Experiments with Dojo framework",
-	"license": "MIT",	
+	"license": "MIT",
 	"dependencies": {
-		"dojo": "^1.10"	,
+		"dojo": "^1.10"
+	},
+	"devDependencies": {
 		"http-server": "latest"
 	},
-	"scripts": {        
-        "start": "http-server -p 31415 ."        
-    },
+	"scripts": {
+		"start": "http-server -p 31415 ."
+	},
 	"bugs": "",
-	"keywords": [ "JavaScript", "Dojo", "Learn", "Example" ],
+	"keywords": ["JavaScript", "Dojo", "Learn", "Example"],
 	"homepage": ""
 }

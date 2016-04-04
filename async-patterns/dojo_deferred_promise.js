@@ -8,10 +8,10 @@ require([
 	// Mimic an async I/O call using setTimeout
 	// Return a promise
 	//
-	// url parameter is to make this fake async function look
-	//		like an AJAX call that gets data from a url
-	// successCallback is the user-specified function that 
-	//	executes on completion of the async operation
+	// url parameter - is to make this fake I/O function look
+	//					like an AJAX call that gets data from a url
+	// successCallback - is the user-specified function that 
+	//					executes on completion of the async operation
 	var asyncFunction = function(url) {
 		var deferred = new Deferred();
 
@@ -29,7 +29,7 @@ require([
 	// Consumer
 	//
 	// Example 1: Simple
-	// Specify a function to then() to be executed when th async
+	// Specify a function to then() to be executed when the async
 	// function is successful
 	var asyncFunctionPromise = asyncFunction('http://foo.com/resource1');
 
