@@ -33,9 +33,15 @@ require([
 	// function is successful
 	var asyncFunctionPromise = asyncFunction('http://foo.com/resource1');
 
+
 	// Write business logic to execute after the async function completes
 	asyncFunctionPromise.then(function(data) {
-		console.log('example 1:' + data);
+		console.log('example 1 1st time:' + data);
+	});
+
+	// The same promise can have multiple consumers
+	asyncFunctionPromise.then(function(data) {
+		console.log('example 1 2nd time:' + data);
 	});
 
 
@@ -54,7 +60,6 @@ require([
 	}).then(function(data) {
 		if (data === 'resource3') {
 			console.log('example 2: ' + data)
-			console.log('done');
 		}
 	});
 
