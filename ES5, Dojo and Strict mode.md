@@ -104,7 +104,7 @@ define([
       'use strict';      
       // business logic
     },   
-    _setBarProperty: function(val){
+    _setBarAttr: function(val){
       this.inherited(arguments);
       // business logic  
     }    
