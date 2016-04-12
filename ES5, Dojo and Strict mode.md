@@ -1,9 +1,27 @@
-#Notes on Dojo, ES5 and strict mode
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [Notes on Dojo, ES5 and strict mode](#notes-on-dojo-es5-and-strict-mode)
+  - [Feature comparison: Dojo vs ES5](#feature-comparison-dojo-vs-es5)
+    - [Dojo: lang.hitch](#dojo-langhitch)
+    - [Dojo array functions](#dojo-array-functions)
+    - [Dojo JSON functions](#dojo-json-functions)
+    - [Dojo.isArray](#dojoisarray)
+    - [Dojo string.trim](#dojo-stringtrim)
+  - [Strict mode](#strict-mode)
+    - [Challenges of using strict mode in code mixed with Dojo code](#challenges-of-using-strict-mode-in-code-mixed-with-dojo-code)
+    - [What are the alternatives?](#what-are-the-alternatives)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+# Notes on Dojo, ES5 and strict mode
+
 
 ## Feature comparison: Dojo vs ES5 
-### [Dojo: lang.hitch]  
-
-[Dojo: lang.hitch]: <https://dojotoolkit.org/reference-guide/1.10/dojo/_base/lang.html#hitch>
+### Dojo: lang.hitch  
+[Link to Dojo lang hitch reference page]
+[Link to Dojo lang hitch reference page]: <https://dojotoolkit.org/reference-guide/1.10/dojo/_base/lang.html#hitch>
 hitch can be used to specify a context to a function. It is typically used in async callback functions   
 Eg.
 
@@ -43,8 +61,9 @@ var FormView_bind = {
 FormView_bind.addEventListeners();
 ```
 
-### [Dojo array functions]
-[Dojo array functions]: <http://dojotoolkit.org/reference-guide/1.10/dojo/_base/array.html>
+### Dojo array functions
+[Link to Dojo array functions reference page]
+[Link to Dojo array functions reference page]: <http://dojotoolkit.org/reference-guide/1.10/dojo/_base/array.html>
 
 All of the functions available in Dojo array can be replaced with their methods of the same name in Array.prototye    
 * forEach  
@@ -56,14 +75,14 @@ All of the functions available in Dojo array can be replaced with their methods 
 * reduce
 * every
 
-### [Dojo JSON functions]
-
-[Dojo json functions]: <https://dojotoolkit.org/reference-guide/1.10/dojo/json.html>
+### Dojo JSON functions
+[Link to Dojo JSON reference page]
+[Link to Dojo JSON reference page]: <https://dojotoolkit.org/reference-guide/1.10/dojo/json.html>
 
 The built JSON object is a drop-in replacement which has the parse
 and stringify methods
 
-###Dojo.isArray 
+### Dojo.isArray 
 can be replaced with Array.isArray
 
 ### Dojo string.trim 
