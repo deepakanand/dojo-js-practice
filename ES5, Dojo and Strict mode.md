@@ -164,6 +164,7 @@ foo: function foo() {
 }
 ```
 Source:  https://github.com/Microsoft/TypeScript/issues/3576
+
 Demo: https://jsfiddle.net/deepakanand/hrzeqe68/8/
 
 #### Interesting comments from other sources
