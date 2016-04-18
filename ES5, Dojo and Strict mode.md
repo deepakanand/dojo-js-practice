@@ -1,23 +1,26 @@
+# Notes on Dojo, ES5 and strict mode
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Notes on Dojo, ES5 and strict mode](#notes-on-dojo-es5-and-strict-mode)
-  - [Feature comparison: Dojo vs ES5](#feature-comparison-dojo-vs-es5)
-    - [[Dojo: lang.hitch]](#dojo-langhitch)
-    - [[Dojo array functions]](#dojo-array-functions)
-    - [[Dojo JSON functions]](#dojo-json-functions)
-    - [Dojo.isArray](#dojoisarray)
-    - [Dojo string.trim](#dojo-stringtrim)
-  - [Strict mode](#strict-mode)
-    - [Challenges of using strict mode in code mixed with Dojo code](#challenges-of-using-strict-mode-in-code-mixed-with-dojo-code)
-    - [What are the alternatives?](#what-are-the-alternatives)
-      - [1. Do not use declare for new code](#1-do-not-use-declare-for-new-code)
-      - [Interesting comments from other sources](#interesting-comments-from-other-sources)
+- [Feature comparison: Dojo vs ES5](#feature-comparison-dojo-vs-es5)
+  - [[Dojo: lang.hitch]](#dojo-langhitch)
+  - [[Dojo array functions]](#dojo-array-functions)
+  - [[Dojo JSON functions]](#dojo-json-functions)
+  - [Dojo.isArray](#dojoisarray)
+  - [Dojo string.trim](#dojo-stringtrim)
+- [Strict mode](#strict-mode)
+  - [Challenges of using strict mode in code mixed with Dojo code](#challenges-of-using-strict-mode-in-code-mixed-with-dojo-code)
+  - [What are the alternatives?](#what-are-the-alternatives)
+    - [1. Do not use dojo/declare in new code](#1-do-not-use-dojodeclare-in-new-code)
+    - [2.  Use dojo/declare and strict mode together](#2--use-dojodeclare-and-strict-mode-together)
+      - [2.1 Use strict mode at the individual function level](#21-use-strict-mode-at-the-individual-function-level)
+      - [2.2 If you only want single level inheritance](#22-if-you-only-want-single-level-inheritance)
+      - [2.3 Use a named function expression](#23-use-a-named-function-expression)
+    - [Interesting comments from other sources](#interesting-comments-from-other-sources)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-# Notes on Dojo, ES5 and strict mode
 
 ## Feature comparison: Dojo vs ES5 
 ### [Dojo: lang.hitch]  
@@ -30,10 +33,10 @@ Eg.
 var FormView_hitch = {  
   addEventListeners: function(){ 
     var btn = $('#btn1');
-    var handleClick = function(event){
+    var handleClick =  function(event){
       this.doMore(); 
     };    
-    btn.on('click', handleClick);     
+    btn.on('click', lang.hitch(this, handleClick));     
   },
   doMore: function(){
   // more business logic
@@ -41,9 +44,6 @@ var FormView_hitch = {
 };
 FormView_hitch.addEventListeners();
 ```
-The above fails when the button is clicked with the error message   
-"this.doMore is not a function"
-
 [Function.prototype.bind] can be used as a drop-in replacement for the above
 [Function.prototype.bind]:<https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind>
 ```javascript
@@ -102,25 +102,27 @@ ES6 modules(and classes) will be in strict mode by default i.e. without needing 
  [Link to dojo/declare code]
  [Link to dojo/declare code]: <https://github.com/dojo/dojo/blob/master/_base/declare.js#L104>
 * Applications tend to use dojo/declare heavily over time.
-####Demo:
+#### Demo:
 Run the js fiddle link and open the console
-https://jsfiddle.net/deepakanand/hrzeqe68/3/
+https://jsfiddle.net/deepakanand/hrzeqe68/6/
 You will see the following error
 ```TypeError: 'caller', 'callee', and 'arguments' properties may not be accessed on strict mode functions or the arguments objects for calls to them```
 
 ### What are the alternatives?
 
-#### 1. Do not use declare for new code 
-* Start using strict mode for new code at the Dojo module level
+#### 1. Do not use dojo/declare in new code 
+* This enables you to start using strict mode for new code at the Dojo module level
 ```javascript
 define([
-  // depedencies
+  // dependencies
 ]function(){
   'use strict';  
   //business logic  
 });
 ```
-#### 2. If you want use declare and strict mode together
+The obvious delta with this approach is that you cannot use the class-based programming pattern anymore. 
+
+#### 2.  Use dojo/declare and strict mode together
 ##### 2.1 Use strict mode at the individual function level
 * If you need to use declare, use the strict mode at the individual function level where there is no usage of ```this.inherited(arguments)```
 ```JavaScript
@@ -146,9 +148,23 @@ You can look up the super-class's prototype chain to get at the super-method lik
 // <SuperClass> is the module name
 // <superMethod> is the method name
 ```
-
-Demo;
+Demo:
 https://jsfiddle.net/deepakanand/hrzeqe68/4/
+
+##### 2.3 Use a named function expression
+```javascript
+// strict mode incompatible
+foo: function() {
+    this.inherited(arguments);
+}
+
+// strict mode compatible
+foo: function foo() {
+    this.inherited({callee: foo}, arguments);
+}
+```
+Source:  https://github.com/Microsoft/TypeScript/issues/3576
+Demo: https://jsfiddle.net/deepakanand/hrzeqe68/8/
 
 #### Interesting comments from other sources
 
