@@ -189,19 +189,19 @@ Source: https://gist.github.com/sym3tri/2425983
 - Object.seal(),Object.freeze(),Object.preventExtensions(), Object.isSealed(), Object.isFrozen(),Object.isExtensible()
 - Property attributes: writeable, value, enumerable, configurable, get, set
 
-- Strict Mode: 
-  -- No more implied global variables within functions.
-  -- this is not bound to the global object by function form.
- --  apply and call do not default to the global object.
-  -- No with statement.
-  -- Setting a writeable: false property will throw.
-  -- Deleting a configurable: false property will throw.
-  -- Restrictions on eval.
-  -- eval and arguments are reserved.
-  -- arguments not linked to parameters.
-  -- No more arguments.caller or arguments.callee.
-  -- No more octal literals.
-  -- Duplicate names in an object literal or function parameters are a synt
+- Strict Mode:    
+-- No more implied global variables within functions.    
+-- this is not bound to the global object by function form.    
+-- apply and call do not default to the global object.     
+-- No with statement.     
+-- Setting a writeable: false property will throw.      
+-- Deleting a configurable: false property will throw.         
+-- Restrictions on eval.    
+-- eval and arguments are reserved.    
+-- arguments not linked to parameters.    
+-- No more arguments.caller or arguments.callee.    
+-- No more octal literals.    
+-- Duplicate names in an object literal or function parameters are a syntax error.   
 
 #### Interesting comments from other sources
 
