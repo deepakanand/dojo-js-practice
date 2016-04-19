@@ -1,5 +1,4 @@
 # Notes on Dojo, ES5 and strict mode
-
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
@@ -11,13 +10,15 @@
   - [Dojo.isArray](#dojoisarray)
   - [Dojo string.trim](#dojo-stringtrim)
 - [Strict mode](#strict-mode)
+	- [What is strict mode?](#what-is-strict-mode)
   - [Challenges of using strict mode in code mixed with Dojo code](#challenges-of-using-strict-mode-in-code-mixed-with-dojo-code)
   - [What are the alternatives?](#what-are-the-alternatives)
     - [1. Do not use dojo/declare in new code](#1-do-not-use-dojodeclare-in-new-code)
-    - [2.  Use dojo/declare and strict mode together](#2--use-dojodeclare-and-strict-mode-together)
+    - [2. To use dojo/declare and strict mode together](#2-to-use-dojodeclare-and-strict-mode-together)
       - [2.1 Use strict mode at the individual function level](#21-use-strict-mode-at-the-individual-function-level)
       - [2.2 If you only want single level inheritance](#22-if-you-only-want-single-level-inheritance)
       - [2.3 Use a named function expression](#23-use-a-named-function-expression)
+    - [Summary of ES5 features](#summary-of-es5-features)
     - [Interesting comments from other sources](#interesting-comments-from-other-sources)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -90,12 +91,13 @@ can be replaced with String.prototype.trim
 
 ## Strict mode
 
+### What is strict mode?
 Strict mode was introduced in ES5. This is a way to opt-in to a restricted and safe variant of the language thereby avoiding the problematic bits.
-It is also the future of newer versions of the language.
+More importantly, it is the future of newer versions of the language.
 http://www.2ality.com/2014/12/one-javascript.html
 ES6 modules(and classes) will be in strict mode by default i.e. without needing the ‘use strict’ pragma.
 
-### Challenges of using strict mode in code mixed with Dojo code
+### Challenges of using strict mode in code mixed with Dojo 
   
 * arguments.callee is not supported in strict mode
 * Dojo’s declare module uses arguments.callee to support the super call feature i.e. ```this.inherited(arguments)```.
@@ -122,7 +124,7 @@ define([
 ```
 The obvious delta with this approach is that you cannot use the class-based programming pattern anymore. 
 
-#### 2.  Use dojo/declare and strict mode together
+#### 2.  To use dojo/declare and strict mode together
 ##### 2.1 Use strict mode at the individual function level
 * If you need to use declare, use the strict mode at the individual function level where there is no usage of ```this.inherited(arguments)```
 ```JavaScript
@@ -167,7 +169,45 @@ Source:  https://github.com/Microsoft/TypeScript/issues/3576
 
 Demo: https://jsfiddle.net/deepakanand/hrzeqe68/8/
 
+#### Summary of ES5 features
+Source: https://gist.github.com/sym3tri/2425983
+
+- Trailing commas are ok
+- No reserved words for property names
+- NaN, Infinity, undefined : are all constants
+- parseInt() defaults to radix 10
+- /regexp/ produces new reg ex object every time
+- JSON.parse(), JSON.stringify()
+- Function.prototype.bind
+- String.prototype.trim
+- Array.prototype.every, filter, forEach, indexOf, lastIndexOf, map, reduce, reduceRight, some, 
+- Date.now()
+- Date.prototype.toISOString
+- new Date(string) and Date.parse(string) will try ISO format 1st
+- Array.isArray()
+- Object.keys(),Object.create(),Object.defineProperty, Object.defineProperties,Object.getOwnPropertyDescriptor(),Object.getOwnPropertyNames(obj), Object.getPrototypeOf(obj)
+- Object.seal(),Object.freeze(),Object.preventExtensions(), Object.isSealed(), Object.isFrozen(),Object.isExtensible()
+- Property attributes: writeable, value, enumerable, configurable, get, set
+
+- Strict Mode: 
+  -- No more implied global variables within functions.
+  -- this is not bound to the global object by function form.
+ --  apply and call do not default to the global object.
+  -- No with statement.
+  -- Setting a writeable: false property will throw.
+  -- Deleting a configurable: false property will throw.
+  -- Restrictions on eval.
+  -- eval and arguments are reserved.
+  -- arguments not linked to parameters.
+  -- No more arguments.caller or arguments.callee.
+  -- No more octal literals.
+  -- Duplicate names in an object literal or function parameters are a synt
+
 #### Interesting comments from other sources
+
+http://yuiblog.com/blog/2010/12/14/strict-mode-is-coming-to-town/
+"Strict mode is the most important feature of ES5"
+
 
 https://devchat.tv/js-jabber/062-jsj-dojo-with-dylan-schiemann
 Dylan(CEO of Sitepen)
