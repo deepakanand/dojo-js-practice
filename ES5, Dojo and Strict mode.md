@@ -4,11 +4,12 @@
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
 - [Feature comparison: Dojo vs ES5](#feature-comparison-dojo-vs-es5)
-  - [[Dojo: lang.hitch]](#dojo-langhitch)
-  - [[Dojo array functions]](#dojo-array-functions)
-  - [[Dojo JSON functions]](#dojo-json-functions)
-  - [Dojo.isArray](#dojoisarray)
-  - [Dojo string.trim](#dojo-stringtrim)
+  - [Dojo: lang.hitch](#dojo-langhitch) (ES5: Function.prototype.bind)
+  - [Dojo: lang.delegate](#dojo-langdelegate) (ES5: Object.create)
+  - [Dojo: array functions](#dojo-array-functions)(ES5: Array.prototype functions)
+  - [Dojo: JSON functions](#dojo-json-functions) (ES5: Built-in JSON object)
+  - [Dojo.isArray](#dojoisarray) (ES5: Array.isArray() )
+  - [Dojo: string.trim](#dojo-stringtrim)(ES5: String.prototype.trim)
 - [Strict mode](#strict-mode)
 	- [What is strict mode?](#what-is-strict-mode)
   - [Challenges of using strict mode in code mixed with Dojo code](#challenges-of-using-strict-mode-in-code-mixed-with-dojo-code)
@@ -18,9 +19,9 @@
       - [2.1 Use strict mode at the individual function level](#21-use-strict-mode-at-the-individual-function-level)
       - [2.2 If you only want single level inheritance](#22-if-you-only-want-single-level-inheritance)
       - [2.3 Use a named function expression](#23-use-a-named-function-expression)
-    - [Summary of ES5 features](#summary-of-es5-features)
-    - [Interesting comments from other sources](#interesting-comments-from-other-sources)
-
+ - [Interesting comments from other sources](#interesting-comments-from-other-sources)
+- [Summary of ES5 features](#summary-of-es5-features)
+    
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Feature comparison: Dojo vs ES5 
@@ -62,6 +63,16 @@ var FormView_bind = {
 };
 FormView_bind.addEventListeners();
 ```
+Using Dojo hitch/[partial](https://dojotoolkit.org/reference-guide/1.10/dojo/_base/lang.html#partial)/Function.prototype.bind to bind context is a trivial use-case. More importantly, it enables using a functional programming pattern known as partial application.
+
+
+### [Dojo: lang.delegate]
+[Dojo: lang.delegate]: <https://dojotoolkit.org/reference-guide/1.10/dojo/_base/lang.html#delegate>
+
+delegate returns a new object that delegates to the user-specified object for properties it does not have  
+[Object.create](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create) can be used to do the same.
+
+Douglas Crockford, Kyle Simpson and several other JS experts recommend the delegation pattern over the class-based pattern.
 
 ### [Dojo array functions]
 [Dojo array functions]: <http://dojotoolkit.org/reference-guide/1.10/dojo/_base/array.html>
@@ -76,11 +87,13 @@ All of the functions available in Dojo array can be replaced with their methods 
 * reduce
 * every
 
+JS experts strongly recommend using these more expressive forms of loop iteration functions over regular index-based for loops unless the order of looping is important. 
+
 ### [Dojo JSON functions]
 
 [Dojo json functions]: <https://dojotoolkit.org/reference-guide/1.10/dojo/json.html>
 
-The built JSON object is a drop-in replacement which has the parse
+The [built-in JSON object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON) is a drop-in replacement which has the parse
 and stringify methods
 
 ### Dojo.isArray 
@@ -106,7 +119,7 @@ ES6 modules(and classes) will be in strict mode by default i.e. without needing 
 * Applications tend to use dojo/declare heavily over time.
 #### Demo:
 Run the js fiddle link and open the console
-https://jsfiddle.net/deepakanand/hrzeqe68/6/
+https://jsfiddle.net/deepakanand/hrzeqe68/3/
 You will see the following error
 ```TypeError: 'caller', 'callee', and 'arguments' properties may not be accessed on strict mode functions or the arguments objects for calls to them```
 
@@ -151,7 +164,7 @@ You can look up the super-class's prototype chain to get at the super-method lik
 // <superMethod> is the method name
 ```
 Demo:
-https://jsfiddle.net/deepakanand/hrzeqe68/4/
+https://jsfiddle.net/deepakanand/hrzeqe68/6/
 
 ##### 2.3 Use a named function expression
 ```javascript
@@ -169,7 +182,18 @@ Source:  https://github.com/Microsoft/TypeScript/issues/3576
 
 Demo: https://jsfiddle.net/deepakanand/hrzeqe68/8/
 
-#### Summary of ES5 features
+#### Interesting comments from other sources
+
+http://yuiblog.com/blog/2010/12/14/strict-mode-is-coming-to-town/
+Douglas Crockford
+"Strict mode is the most important feature of ES5"
+
+
+https://devchat.tv/js-jabber/062-jsj-dojo-with-dylan-schiemann
+Dylan(CEO of Sitepen)
+"to be honest, strict mode isn’t the most exciting thing to us. When we do run tests and compare the performance gains by stripping out features that you wouldn’t use in strict mode, it doesn’t save us a lot more than just using the normal closure compiler. Maybe it shaves a couple more percent off the size of our codebase. It’s not as big of a gain as we expected so it hasn’t been as high of a priority for us. I know why people like it, of course. Basically, the normal closure compiler gives us 90% of the gains we normally get and strict mode just adds a little bit more on top. So, it hasn’t been as high of a priority. "
+
+### Summary of ES5 features
 Source: https://gist.github.com/sym3tri/2425983
 
 - Trailing commas are ok
@@ -189,29 +213,17 @@ Source: https://gist.github.com/sym3tri/2425983
 - Object.seal(),Object.freeze(),Object.preventExtensions(), Object.isSealed(), Object.isFrozen(),Object.isExtensible()
 - Property attributes: writeable, value, enumerable, configurable, get, set
 
-- Strict Mode:    
--- No more implied global variables within functions.    
--- this is not bound to the global object by function form.    
--- apply and call do not default to the global object.     
--- No with statement.     
--- Setting a writeable: false property will throw.      
--- Deleting a configurable: false property will throw.         
--- Restrictions on eval.    
--- eval and arguments are reserved.    
--- arguments not linked to parameters.    
--- No more arguments.caller or arguments.callee.    
--- No more octal literals.    
--- Duplicate names in an object literal or function parameters are a syntax error.   
+- Strict Mode: 
+  -- No more implied global variables within functions.
+  -- this is not bound to the global object by function form.
+ --  apply and call do not default to the global object.
+  -- No with statement.
+  -- Setting a writeable: false property will throw.
+  -- Deleting a configurable: false property will throw.
+  -- Restrictions on eval.
+  -- eval and arguments are reserved.
+  -- arguments not linked to parameters.
+  -- No more arguments.caller or arguments.callee.
+  -- No more octal literals.
+  -- Duplicate names in an object literal or function parameters are a synt
 
-#### Interesting comments from other sources
-
-http://yuiblog.com/blog/2010/12/14/strict-mode-is-coming-to-town/
-"Strict mode is the most important feature of ES5"
-
-
-https://devchat.tv/js-jabber/062-jsj-dojo-with-dylan-schiemann
-Dylan(CEO of Sitepen)
-"to be honest, strict mode isn’t the most exciting thing to us. When we do run tests and compare the performance gains by stripping out features that you wouldn’t use in strict mode, it doesn’t save us a lot more than just using the normal closure compiler. Maybe it shaves a couple more percent off the size of our codebase. It’s not as big of a gain as we expected so it hasn’t been as high of a priority for us. I know why people like it, of course. Basically, the normal closure compiler gives us 90% of the gains we normally get and strict mode just adds a little bit more on top. So, it hasn’t been as high of a priority. "
-
-https://github.com/csnover/dojo2-core#linting
-"Strict mode is not supported across all platforms supported by the toolkit, which means that code will execute differently on different platforms if "use strict" is enabled. Furthermore, certain frameworks like .NET walk call chains using arguments.callee and will break if any function within the call chain uses "use strict". Since strict mode provides no substantial benefit when code is already being passed through a linter, its use within the toolkit is forbidden. "
